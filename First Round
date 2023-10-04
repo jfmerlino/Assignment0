@@ -1,0 +1,30 @@
+//
+//  ContentView.swift
+//  Assignment0
+//
+//  Created by Student on 10/4/23.
+//
+
+import SwiftUI
+
+
+struct ContentView: View {
+    
+  @State private var hobbies = ["Reading 📖", "Running 🏃🏼‍♀️", "Weight-Lifting 🏋🏼‍♀️", "Cooking 🍳", "Painting 🎨", "Photography 📸", "Playing an Instrument 🎶", "Baking 🧁", "Journaling ✍🏻", "Camping ⛺"]
+    
+    var body: some View{
+  
+        NavigationView {
+            Text("List of Hobbies")
+             .navigationTitle("Hobby Tracker")
+            Spacer()
+        }
+    }
+    
+    
+        struct ContentView_Previews: PreviewProvider {
+        static var previews: some View {
+            ContentView()
+        }
+    }
+}
