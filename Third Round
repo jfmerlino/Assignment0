@@ -1,0 +1,111 @@
+//
+//  ContentView.swift
+//  Assignment0
+//
+//  Created by Student on 10/4/23.
+//
+
+import SwiftUI
+
+
+struct ContentView: View {
+    
+    @State private var bgColor = Color.purple
+    
+    @State var hobbies = ["Reading 📖", "Running 🏃🏼‍♀️", "Weight-Lifting 🏋🏼‍♀️", "Cooking 🍳", "Painting 🎨", "Photography 📸", "Playing an Instrument 🎶", "Baking 🧁", "Journaling ✍🏻", "Camping ⛺"]
+    
+    
+    var body: some View{
+        
+        NavigationView {
+            
+            VStack{
+                HStack{
+                    NavigationLink(destination: View1(hobbies:$hobbies)){
+                        Text("+")
+                            .offset(x: -10)
+                            .padding(.leading, 375)
+                            .font(.largeTitle)
+                            .navigationTitle("Hobby Tracker")
+                    }
+                }
+                List(hobbies, id: \.self){
+                    Text($0)
+                }
+            }
+            
+        }
+    }
+}
+    
+private extension ContentView {
+    
+    struct View1: View {
+        
+        @State var hobby = " "
+        @State var pickerSelection = " "
+        
+        @Binding var hobbies:[String]
+        
+        
+        var body: some View {
+            VStack{
+                Text("Please enter a new hobby and pick an emoji: ")
+
+                Form {
+                    Picker(selection: $pickerSelection, label: TextField("Hobby", text: $hobby), content: {
+                        Group{
+                            Text("🎢").tag("🎢")
+                            Text("🚲").tag("🚲")
+                            Text("🛼").tag("🛼")
+                            Text("✈️").tag("✈️")
+                            Text("🛶").tag("🛶")
+                            Text("⚽").tag("⚽")
+                            Text("⛳").tag("⛳")
+                            Text("🎮").tag("🎮")
+                            Text("🏀").tag("🏀")
+                            Text("🏐").tag("🏐")}
+                        
+                        Group{
+                        Text("🏈").tag("🏈")
+                        Text("🏉").tag("🏉")
+                        Text("🎾").tag("🎾")
+                        Text("🥏").tag("🥏")
+                        Text("🎳").tag("🎳")
+                        Text("🏑").tag("🏑")
+                        Text("🥍").tag("🥍")
+                        Text("🎣").tag("🎣")
+                        Text("🤿").tag("🤿")
+                        Text("🧩").tag("🧩")}
+                        
+                    })
+                }
+                
+                //Button {hobby = hobby + pickerSelection} label: {Label("Submit", systemImage: "hobby")}
+                Button("Submit"action: ,{
+                    hobby = hobby +pickerSelection
+                    hobbies.append(hobby)})
+            
+                Spacer()
+
+                     
+               // if hobbies.contains(hobby){
+                 //   Text("Please enter a new hobby that is not already in the given list:")
+                   // TextField("Hobby", text: $hobby)
+                     //   .textFieldStyle(RoundedBorderTextFieldStyle())
+                       // .padding()
+                    //Spacer()
+                    
+                //}
+            }
+        }
+    }
+}
+    
+    
+    
+        struct ContentView_Previews: PreviewProvider {
+        static var previews: some View {
+            ContentView()
+        }
+    }
