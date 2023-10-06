@@ -1,0 +1,117 @@
+//
+//  ContentView.swift
+//  Assignment0
+//
+//  Created by Student on 10/4/23.
+//
+
+import SwiftUI
+
+
+struct ContentView: View {
+    
+    @State var customColor = Color(red: 204.0/255.0, green: 204.0/255.0, blue: 255.0/255.0)
+    
+    @State var hobbies = ["Reading 📖", "Running 🏃🏼‍♀️", "Weight-Lifting 🏋🏼‍♀️", "Cooking 🍳", "Painting 🎨", "Photography 📸", "Playing an Instrument 🎶", "Baking 🧁", "Journaling ✍🏻", "Camping ⛺"]
+    
+    
+    var body: some View{
+        
+            NavigationView {
+                ZStack{
+                    customColor.background().edgesIgnoringSafeArea(.all)
+                VStack{
+                    HStack{
+                        NavigationLink(destination: View1(hobbies:$hobbies)){
+                            Text("+")
+                                .offset(x: -10)
+                                .padding(.leading, 375)
+                                .font(.largeTitle)
+                                .navigationTitle("Hobby Tracker")
+                        }
+                    }
+                    
+                    List(hobbies, id: \.self){
+                        Text($0)
+                    }
+                 }
+            }
+        }
+    }
+}
+    
+private extension ContentView {
+    
+    struct View1: View {
+        
+        @State var hobby = " "
+        @State var pickerSelection = " "
+        @State var customColor = Color(red: 204.0/255.0, green: 204.0/255.0, blue: 255.0/255.0)
+        
+        @Binding var hobbies:[String]
+        
+
+        
+        var body: some View {
+            
+            ZStack{
+                
+                customColor
+                    .background()
+                    .edgesIgnoringSafeArea(.all)
+                
+                VStack{
+                    
+                    Text("Please enter a new hobby and pick an emoji: ")
+                    
+                    Form {
+                        Picker(selection: $pickerSelection, label: TextField("Hobby", text: $hobby), content: {
+                            Group{
+                                Text(" ").tag(" ")
+                            }
+                            Group{
+                                Text("🎢").tag("🎢")
+                                Text("🚲").tag("🚲")
+                                Text("🛼").tag("🛼")
+                                Text("✈️").tag("✈️")
+                                Text("🛶").tag("🛶")
+                                Text("⚽").tag("⚽")
+                                Text("⛳").tag("⛳")
+                                Text("🎮").tag("🎮")
+                                Text("🏀").tag("🏀")
+                                Text("🏐").tag("🏐")}
+                            
+                            Group{
+                                Text("🏈").tag("🏈")
+                                Text("🏉").tag("🏉")
+                                Text("🎾").tag("🎾")
+                                Text("🥏").tag("🥏")
+                                Text("🎳").tag("🎳")
+                                Text("🏑").tag("🏑")
+                                Text("🥍").tag("🥍")
+                                Text("🎣").tag("🎣")
+                                Text("🤿").tag("🤿")
+                                Text("🧩").tag("🧩")}
+                            
+                            
+                        })
+                        
+                    }
+                    
+                    Button {hobby = hobby + pickerSelection;
+                        hobbies.append(hobby)}
+                label: {Label("Submit", systemImage: "hobby")}
+                    Spacer()
+                } 
+            }
+        }
+    }
+}
+    
+    
+    
+        struct ContentView_Previews: PreviewProvider {
+        static var previews: some View {
+            ContentView()
+        }
+    }
