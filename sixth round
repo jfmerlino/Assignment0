@@ -1,0 +1,117 @@
+import SwiftUI
+import UIKit
+
+struct ContentView: View {
+    @State private var hobbies = ["Reading 📖", "Running 🏃🏼‍♀️", "Weight-Lifting 🏋🏼‍♀️", "Cooking 🍳", "Painting 🎨", "Photography 📸", "Playing an Instrument 🎶", "Baking 🧁", "Journaling ✍🏻", "Camping ⛺"]
+
+    var body: some View {
+        NavigationView {
+            ZStack {
+                Color(UIColor(red: 204.0/255.0, green: 204.0/255.0, blue: 255.0/255.0, alpha: 1.0))
+                    .edgesIgnoringSafeArea(.all)
+
+                VStack {
+                    HStack {
+                        NavigationLink(destination: View1(hobbies: $hobbies)) {
+                            Text("+")
+                                .offset(x: -10)
+                                .padding(.leading, 375)
+                                .font(.largeTitle)
+                                .navigationTitle("Hobby Tracker")
+                        }
+                    }
+
+                    List(hobbies, id: \.self) {
+                        Text($0)
+                        
+                    }
+                    .scrollContentBackground(.hidden)
+                }
+            }
+        }
+    }
+}
+
+private extension ContentView {
+    struct View1: View {
+        @State private var hobby = " "
+        @State private var pickerSelection = " "
+        @Binding var hobbies: [String]
+
+        var body: some View {
+            ZStack {
+                Color(UIColor(red: 204.0/255.0, green: 204.0/255.0, blue: 255.0/255.0, alpha: 1.0))
+                    .edgesIgnoringSafeArea(.all)
+
+                VStack {
+                    Text("Please enter a new hobby and pick an emoji: ")
+
+                    Form {
+                        Picker(selection: $pickerSelection, label: TextField("Hobby", text: $hobby)) {
+                            Group{
+                                Text(" ").tag(" ")}
+                            Group{
+                                Text("🎢").tag("🎢")
+                                Text("🚲").tag("🚲")
+                                Text("🛼").tag("🛼")
+                                Text("✈️").tag("✈️")
+                                Text("🛶").tag("🛶")
+                                Text("⚽").tag("⚽")
+                                Text("⛳").tag("⛳")
+                                Text("🎮").tag("🎮")
+                                Text("🏀").tag("🏀")
+                                Text("🏐").tag("🏐")}
+                            Group{
+                                Text("🏈").tag("🏈")
+                                Text("🏉").tag("🏉")
+                                Text("🎾").tag("🎾")
+                                Text("🥏").tag("🥏")
+                                Text("🎳").tag("🎳")
+                                Text("🏑").tag("🏑")
+                                Text("🥍").tag("🥍")
+                                Text("🎣").tag("🎣")
+                                Text("🤿").tag("🤿")
+                                Text("🧩").tag("🧩")}
+                        }
+                    }
+
+                    Button(action: {
+                        hobby = hobby + pickerSelection
+                        hobbies.append(hobby)
+                        checkingDuplicates(hobby: hobby, emoji: pickerSelection, hobbiesList: hobbies)
+                        
+                    }) {
+                        Label("Submit", systemImage: "hobby")
+                            .font(.system(size:20))
+                            .foregroundColor(.purple)
+                    }
+                    Spacer()
+                }
+                .scrollContentBackground(.hidden)            }
+        }
+    }
+}
+
+func checkingDuplicates(hobby: String, emoji: String, hobbiesList: Array<String>)
+{
+    let checkingHobby = hobby.lowercased()
+    
+    for i in hobbiesList{
+        let temporary = i.dropLast().dropLast().lowercased()
+        
+        if temporary == checkingHobby{
+            let alert = Alert(title: Text("This hobby has already been added."),
+                                          message: Text("There is no undo"),
+                                          primaryButton: .destructive(Text("Delete")) {
+                                              print("Deleting...")
+                                          },
+                                          secondaryButton: .cancel())
+        }
+    }
+}
+
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
+}
